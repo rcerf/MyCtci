@@ -1,6 +1,9 @@
 //Implement an algorithm to determine if a string has all unique characters.
 //What if you cannot use additional data structures?
 function uniqCharacters(str){
+  if(str.length > 256){
+    return false;
+  }
   var hash = {};
   function cb(preVal, currVal){
     if(!preVal){
@@ -13,10 +16,12 @@ function uniqCharacters(str){
 
     return hash[currVal] = true;
   }
-  return Array.prototype.reduce.call(str, cb);
+  return Array.prototype.reduce.apply(str, [cb, true]);
 }
 
+
 assertTrueFalse("uniqCharacters should work for a single character", true, uniqCharacters("abc" ));
+assertTrueFalse("uniqCharacters should work for repeated characters", false, uniqCharacters("aabc" ));
 
 function assertTrueFalse(testsDescription, expected, actual){
   var statement = actual + " SHOULD EQUAL " + expected + "\n";
